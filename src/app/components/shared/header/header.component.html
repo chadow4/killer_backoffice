@@ -1,1 +1,8 @@
-<p>header works!</p>
+<nav class="navbar">
+  <h1 [routerLink]="['/']" class="logo cursor-pointer">Killer INSA</h1>
+  <ul class="nav-links gap-5">
+    <li [routerLink]="['login']">Connexion</li>
+    <li [routerLink]="['register']">Inscription</li>
+    <li>Deconnexion</li>
+  </ul>
+</nav>
