@@ -16,6 +16,7 @@ import { CreateGameComponent } from './components/pages/create-game/create-game.
 import { CreateUsersComponent } from './components/pages/create-users/create-users.component';
 import { EditGameComponent } from './components/pages/edit-game/edit-game.component';
 import { HomeComponent } from './components/pages/home/home.component';
+import { HeaderComponent } from './components/shared/header/header.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { HomeComponent } from './components/pages/home/home.component';
     CreateGameComponent,
     CreateUsersComponent,
     EditGameComponent,
-    HomeComponent
+    HomeComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

@@ -1,1 +1,69 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
+@import url('https://fonts.googleapis.com/css2?family=Alegreya&family=Montserrat:wght@500&family=Yeseva+One&display=swap');
+
+h1, h2, h3, h4, h5, h6,li,a, ul{
+  margin: 0 !important;
+}
+
+html{
+  scroll-behavior: smooth;
+}
+
+body{
+  font-family: 'Yeseva One', cursive !important;
+}
+
+// alert bar
+
+.mat-snack-bar-container {
+  max-width: 15vw !important;
+  transition: 0.5s right;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  box-shadow: 3px 3px 10px #000;
+  border-radius: 10px 10px 10px 10px;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 996px) {
+  .mat-snack-bar-container {
+    max-width: 75% !important;
+  }
+}
+
+
+.success-snackbar {
+  background-color: #2ecc71;
+  color: #fff;
+}
+
+.error-snackbar {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.mat-simple-snackbar-action button {
+  background: white;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+
+.mat-headline, .mat-typography h1 {
+  font: 400 30px/32px 'Montserrat', sans-serif;
+}
+
+
+.mat-simple-snackbar-action button {
+  max-height: 36px;
+  min-width: 0;
+  color: black !important;
+}
+@media (max-width: 996px) {
+  .mat-headline, .mat-typography h1 {
+    font: 400 26px/32px 'Montserrat', sans-serif;
+  }
+}
