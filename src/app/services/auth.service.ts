@@ -41,10 +41,10 @@ export class AuthService {
   public logout() {
     localStorage.removeItem(this.USER_TOKEN_KEY);
     this.isLoggedInSubject.next(false);
-    this.router.navigate(['/']).then(() => this.alertService.success("successful disconnected"))
+    this.router.navigate(['/']);
   }
 
-  public isAdmin(): boolean {
+  public isLoggedIn(): boolean {
     return this.getCurrentToken() != null;
   }
 

@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -17,6 +17,7 @@ import { CreateUsersComponent } from './components/pages/create-users/create-use
 import { EditGameComponent } from './components/pages/edit-game/edit-game.component';
 import { HomeComponent } from './components/pages/home/home.component';
 import { HeaderComponent } from './components/shared/header/header.component';
+import {AuthInterceptor} from "./interceptors/auth-interceptor";
 
 @NgModule({
   declarations: [
@@ -41,7 +42,13 @@ import { HeaderComponent } from './components/shared/header/header.component';
     MatSnackBarModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

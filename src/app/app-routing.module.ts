@@ -7,16 +7,18 @@ import {DashboardComponent} from "./components/pages/dashboard/dashboard.compone
 import {CreateGameComponent} from "./components/pages/create-game/create-game.component";
 import {CreateUsersComponent} from "./components/pages/create-users/create-users.component";
 import {EditGameComponent} from "./components/pages/edit-game/edit-game.component";
+import {ConnectedGuard} from "./guards/connected-guard";
+import {DisconnectedGuard} from "./guards/disconnected-guard";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home',component: HomeComponent},
-  {path: 'login', component: LoginComponent, canActivate: []},
-  {path: 'register', component: RegisterComponent, canActivate: []},
-  {path: 'dashboard', component: DashboardComponent, canActivate: []},
-  {path: 'create-game', component: CreateGameComponent, canActivate: []},
-  {path: 'create-users', component: CreateUsersComponent, canActivate: []},
-  {path: 'edit-game/:game_name/:idgame', component: EditGameComponent, canActivate: []},
+  {path: 'login', component: LoginComponent, canActivate: [ConnectedGuard]},
+  {path: 'register', component: RegisterComponent, canActivate: [ConnectedGuard]},
+  {path: 'dashboard', component: DashboardComponent, canActivate: [DisconnectedGuard]},
+  {path: 'create-game', component: CreateGameComponent, canActivate: [DisconnectedGuard]},
+  {path: 'create-users', component: CreateUsersComponent, canActivate: [DisconnectedGuard]},
+  {path: 'edit-game/:game_name/:idgame', component: EditGameComponent, canActivate: [DisconnectedGuard]},
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
