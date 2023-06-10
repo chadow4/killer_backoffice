@@ -14,7 +14,7 @@
   </div>
   <div *ngIf="subPage === 'games'" class="list-games text-center row align-items-center justify-content-center flex-column">
     <h3 class="my-4">Liste des parties : </h3>
-    <button [routerLink]="['create-game']" class="col-auto btn">🆕 Créer une nouvelle partie</button>
+    <button  routerLink="/create-game" class="col-auto btn">🆕 Créer une nouvelle partie</button>
     <div class="my-4 list-game col-12 col-lg-8 border p-5 rounded-2" *ngFor="let game of userInfos.games.as_staff">
       <div class="d-flex align-items-center justify-content-center gap-4 py-3">
         <h3>{{game.name}}</h3>
