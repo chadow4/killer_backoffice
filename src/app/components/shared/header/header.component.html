@@ -1,8 +1,12 @@
 <nav class="navbar">
-  <h1 [routerLink]="['/']" class="logo cursor-pointer">Killer INSA</h1>
+  <div [routerLink]="['/']" class="hero d-flex align-items-center gap-2  cursor-pointer">
+    <img class="img-fluid" width="100px" [src]="'assets/Logo.png'" alt="Logo">
+    <h1 class="logo cursor-pointer">Killer INSA</h1>
+  </div>
   <ul class="nav-links gap-5">
-    <li [routerLink]="['login']">Connexion</li>
-    <li [routerLink]="['register']">Inscription</li>
-    <li>Deconnexion</li>
+    <li *ngIf="!loggedIn" [routerLink]="['login']">Connexion</li>
+    <li *ngIf="!loggedIn" [routerLink]="['register']">Inscription</li>
+    <li *ngIf="loggedIn" [routerLink]="['dashboard']">Dashboard</li>
+    <li (click)="logout()" *ngIf="loggedIn">Deconnexion</li>
   </ul>
 </nav>
