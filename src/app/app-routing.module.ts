@@ -18,7 +18,7 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent, canActivate: [DisconnectedGuard]},
   {path: 'create-game', component: CreateGameComponent, canActivate: [DisconnectedGuard]},
   {path: 'create-users', component: CreateUsersComponent, canActivate: [DisconnectedGuard]},
-  {path: 'edit-game/:game_name/:idgame', component: EditGameComponent, canActivate: [DisconnectedGuard]},
+  {path: 'edit-game/:gameName/:gameId', component: EditGameComponent, canActivate: [DisconnectedGuard]},
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

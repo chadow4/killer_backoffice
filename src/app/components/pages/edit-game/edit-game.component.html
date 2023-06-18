@@ -1,1 +1,21 @@
-<p>edit-game works!</p>
+<div class="edit-game-form row animate__animated animate__fadeIn">
+  <form #loginF="ngForm" (ngSubmit)="loginF.form.valid && onSubmit()">
+    <div class="form-title">
+      <h1 class="text-uppercase fw-bold text-center mb-4">Créer une partie</h1>
+    </div>
+    <div class="form-group">
+      <input type="text" id="name" name="name" placeholder="Nom de la partie"
+             [(ngModel)]="editGameForm.name" required
+             class="form-control"
+             #name="ngModel">
+    </div>
+    <div class="alert alert-danger p-2 animate__animated animate__fadeIn"
+         role="alert"
+         *ngIf="name.errors && loginF.submitted">
+      le champ ne doit pas être vide et doit contenir entre 2 et 32 caractères
+    </div>
+    <div class="form-group text-center">
+      <button class="btn" type="submit">Modifier la Partie</button>
+    </div>
+  </form>
+</div>

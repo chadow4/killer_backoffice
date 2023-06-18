@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserInformations();
-    this.subPage = "games";
+    this.subPage = 'games';
   }
 
   getUserInformations(){

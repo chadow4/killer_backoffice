@@ -29,7 +29,7 @@ import {AuthInterceptor} from "./interceptors/auth-interceptor";
     CreateUsersComponent,
     EditGameComponent,
     HomeComponent,
-    HeaderComponent
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
