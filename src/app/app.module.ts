@@ -18,6 +18,7 @@ import { EditGameComponent } from './components/pages/edit-game/edit-game.compon
 import { HomeComponent } from './components/pages/home/home.component';
 import { HeaderComponent } from './components/shared/header/header.component';
 import {AuthInterceptor} from "./interceptors/auth-interceptor";
+import { MessageComponent } from './components/pages/message/message.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import {AuthInterceptor} from "./interceptors/auth-interceptor";
     EditGameComponent,
     HomeComponent,
     HeaderComponent,
+    MessageComponent,
   ],
   imports: [
     BrowserModule,

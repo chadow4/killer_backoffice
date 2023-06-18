@@ -9,6 +9,7 @@ import {CreateUsersComponent} from "./components/pages/create-users/create-users
 import {EditGameComponent} from "./components/pages/edit-game/edit-game.component";
 import {ConnectedGuard} from "./guards/connected-guard";
 import {DisconnectedGuard} from "./guards/disconnected-guard";
+import {MessageComponent} from "./components/pages/message/message.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'create-game', component: CreateGameComponent, canActivate: [DisconnectedGuard]},
   {path: 'create-users', component: CreateUsersComponent, canActivate: [DisconnectedGuard]},
   {path: 'edit-game/:gameName/:gameId', component: EditGameComponent, canActivate: [DisconnectedGuard]},
+  {path: 'message/:gameId', component: MessageComponent, canActivate: [DisconnectedGuard]},
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

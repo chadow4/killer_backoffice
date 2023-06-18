@@ -1,24 +1,22 @@
-.login-form {
+.message-game-form{
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
   margin: auto;
   background: #1B1C21;
   box-sizing: border-box;
   border-radius: 20px;
 }
-
-input {
+input, textarea{
   border: 4px solid #FAEFEF;
   border-radius: 11px;
   margin: 1.5em 0;
 }
 
-button {
+button{
   background: #FAEFEF;
   border-radius: 16px;
 }
-
-button:hover {
+button:hover{
   background: #c0baba;
   border-radius: 16px;
   color: #000;

@@ -1,11 +1,11 @@
 <div class="col-12 col-md-8 m-auto dashboard p-5 align-items-center justify-content-center my-5">
-  <div class="text-center">
+  <div class="text-center menu p-5">
     <img class="img-fluid" width="250px" [src]="'assets/Logo.png'" alt="Logo">
     <h1 class="text-uppercase fw-bold my-4">Dashboard</h1>
     <div class="row align-items-center justify-content-center gap-5 my-5">
       <button (click)="setSubPage('games')" [class.active]="subPage === 'games'" class="btn col-auto">⚙️ Administrations des parties</button>
       <button (click)="setSubPage('infos')" [class.active]="subPage === 'infos'" class="btn col-auto">👤Mes informations</button>
-      <button (click)="setSubPage('broadcast')" [class.active]="subPage === 'broadcast'" class="btn col-auto">💬 Broadcast</button>
+      <button (click)="setSubPage('import')" [class.active]="subPage === 'import'" class="btn col-auto">📚 Importer une listes</button>
     </div>
   </div>
   <div *ngIf="subPage === 'infos'" class="">
@@ -13,9 +13,10 @@
     <p>Email : {{userInfos.email}}</p>
   </div>
   <div *ngIf="subPage === 'games'" class="list-games text-center row align-items-center justify-content-center flex-column">
-    <h3 class="my-4">Liste des parties : </h3>
-    <button  [routerLink]="['/create-game']" class="col-auto btn">🆕 Créer une nouvelle partie</button>
-    <div class="my-4 list-game col-12 col-lg-8 border p-5 rounded-2" *ngFor="let game of userInfos.games.as_staff">
+    <h3 class="mt-4">Liste des parties : </h3>
+    <div class="my-5 badge bg-dark col-auto p-2" *ngIf="userInfos.games.as_staff.length == 0"><h5>Vous n'êtes pas encore administrateur d'une Partie</h5></div>
+    <button  [routerLink]="['/create-game']" class="col-auto btn mt-4">🆕 Créer une nouvelle partie</button>
+    <div class="my-4 list-game col-12 col-lg-8 p-5" *ngFor="let game of userInfos.games.as_staff">
       <div class="d-flex align-items-center justify-content-center gap-4 py-3">
         <h3>{{game.name}}</h3>
         <button class="btn" [routerLink]="['/edit-game',game.name,game.id]" aria-current="page" href="#">️️️✏️ Modifier</button>
@@ -26,6 +27,7 @@
       <div class="row p-1 align-items-center justify-content-center gap-4">
         <button class="btn  col-12 col-md-auto" (click)="startGame(game.id)"><i class="fas fa-arrow-alt-circle-up me-1"></i>🏁 Lancer la partie</button>
         <button class="btn col-12 col-md-auto" (click)="deleteGame(game.id)"><i class="fas fa-trash me-1"></i>🗑️ Supprimer la partie</button>
+        <button class="btn col-12 col-md-auto" [routerLink]="['/message',game.id]" ><i class="fas fa-stop-circle me-1"></i>💬 Faire une annonce</button>
       </div>
     </div>
   </div>

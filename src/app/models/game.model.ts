@@ -11,3 +11,8 @@ export interface GameDetailed {
     total: number;
   };
 }
+
+export interface Message {
+  title: string;
+  body: string;
+}

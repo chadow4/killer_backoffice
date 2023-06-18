@@ -1,31 +1,33 @@
-<div class="login-form p-5 row animate__animated animate__fadeIn">
+<div class="message-game-form p-5 row animate__animated animate__fadeIn">
   <form #loginF="ngForm" (ngSubmit)="loginF.form.valid && onSubmit()">
     <div class="form-title d-flex flex-column justify-content-center align-items-center">
       <img class="img-fluid m-5" width="250px" [src]="'assets/Logo.png'" alt="Logo">
-      <h1 class="text-uppercase fw-bold text-center mb-4">SE CONNECTER</h1>
+
+      <h1 class="text-uppercase fw-bold text-center mb-4">Faire une Annonce</h1>
     </div>
     <div class="form-group">
-      <input type="email" id="email" name="username" placeholder="Email"
-             [(ngModel)]="loginForm.email" required
+      <input type="text" id="title" name="title" placeholder="Titre"
+             [(ngModel)]="messageGameForm.title" required
              class="form-control"
-             #email="ngModel">
+             #title="ngModel">
     </div>
     <div class="alert alert-danger p-2 animate__animated animate__fadeIn"
          role="alert"
-         *ngIf="email.errors && loginF.submitted">
+         *ngIf="title.errors && loginF.submitted">
       le champ ne doit pas être vide
     </div>
     <div class="form-group">
-      <input type="password" id="password" name="password"  placeholder="Mot de passe" [(ngModel)]="loginForm.password" required
-             class="form-control mt-1" #password="ngModel">
+  <textarea id="body" name="body" placeholder="Contenu" [(ngModel)]="messageGameForm.body" required
+            class="form-control" #body="ngModel"></textarea>
     </div>
+
     <div class="alert alert-danger p-2 animate__animated animate__fadeIn"
          role="alert"
-         *ngIf="password.errors && loginF.submitted">
+         *ngIf="body.errors && loginF.submitted">
       le champ ne doit pas être vide
     </div>
     <div class="form-group text-center">
-      <button class="btn" type="submit">Se connecter</button>
+      <button class="btn" type="submit">Envoyer le Message</button>
     </div>
   </form>
 </div>

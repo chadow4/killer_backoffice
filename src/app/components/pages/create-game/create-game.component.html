@@ -1,6 +1,7 @@
-<div class="create-game-form row animate__animated animate__fadeIn">
+<div class="create-game-form p-5 row animate__animated animate__fadeIn">
   <form #loginF="ngForm" (ngSubmit)="loginF.form.valid && onSubmit()">
-    <div class="form-title">
+    <div class="form-title d-flex flex-column justify-content-center align-items-center">
+      <img class="img-fluid m-5" width="250px" [src]="'assets/Logo.png'" alt="Logo">
       <h1 class="text-uppercase fw-bold text-center mb-4">Créer une partie</h1>
     </div>
     <div class="form-group">
@@ -12,7 +13,7 @@
     <div class="alert alert-danger p-2 animate__animated animate__fadeIn"
          role="alert"
          *ngIf="name.errors && loginF.submitted">
-      le champ ne doit pas être vide et doit contenir entre 2 et 32 caractères
+      le champ ne doit pas être vide
     </div>
     <div class="form-group text-center">
       <button class="btn" type="submit">Créer la Partie</button>
