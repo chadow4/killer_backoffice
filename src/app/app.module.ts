@@ -19,6 +19,7 @@ import { HomeComponent } from './components/pages/home/home.component';
 import { HeaderComponent } from './components/shared/header/header.component';
 import {AuthInterceptor} from "./interceptors/auth-interceptor";
 import { MessageComponent } from './components/pages/message/message.component';
+import { GameDetailsComponent } from './components/pages/game-details/game-details.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { MessageComponent } from './components/pages/message/message.component';
     HomeComponent,
     HeaderComponent,
     MessageComponent,
+    GameDetailsComponent,
   ],
   imports: [
     BrowserModule,

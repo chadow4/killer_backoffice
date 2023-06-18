@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {API_URL} from "./config";
-import {GameCreate, Message} from "../models/game.model";
+import {createMessage, GameCreate} from "../models/game.model";
 import {ResponseAPI} from "../models/responseAPI.model";
 import {Observable} from "rxjs";
 
@@ -36,8 +36,15 @@ export class GameService {
     return this.http.get<ResponseAPI>(this.gameUrl + "/" + gameId + "/start")
   }
 
-  public sendMessage(gameId: string, message: Message): Observable<ResponseAPI> {
+  public sendMessage(gameId: string, message: createMessage): Observable<ResponseAPI> {
     return this.http.post<ResponseAPI>(this.gameUrl + "/" + gameId + "/message", message);
+  }
+
+  public getMessages(gameId: string, offset: number, limit: number): Observable<ResponseAPI> {
+    const params = new HttpParams()
+      .set('offset', offset.toString())
+      .set('limit', limit.toString());
+    return this.http.get<ResponseAPI>(this.gameUrl + "/" + gameId + "/feed",{params: params});
   }
 
   public getStatusText(status: number): string {

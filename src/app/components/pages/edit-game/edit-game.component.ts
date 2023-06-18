@@ -33,7 +33,7 @@ export class EditGameComponent implements OnInit {
     this.gameService.updateGame(this.gameId,gameEdit).subscribe({
       next: (res) => {
         this.alertService.success(res.message);
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['/game',this.gameId]);
       },
       error: err => this.alertService.error(err.error.message)
     });

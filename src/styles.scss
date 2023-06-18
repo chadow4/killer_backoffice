@@ -68,3 +68,17 @@ body{
   }
 }
 
+@keyframes zoomIn {
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1); /* L'image est agrandie à sa taille normale */
+  }
+}
+
+/* Animation d'une image qui se zoome lorsqu'elle apparaît */
+.zoom-image {
+  transform: scale(0.5); /* L'image est invisible par défaut */
+  animation: zoomIn 2s ease forwards; /* L'animation dure 2 secondes */
+}

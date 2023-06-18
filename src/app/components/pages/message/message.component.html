@@ -1,7 +1,7 @@
 <div class="message-game-form p-5 row animate__animated animate__fadeIn">
   <form #loginF="ngForm" (ngSubmit)="loginF.form.valid && onSubmit()">
     <div class="form-title d-flex flex-column justify-content-center align-items-center">
-      <img class="img-fluid m-5" width="250px" [src]="'assets/Logo.png'" alt="Logo">
+      <img class="img-fluid m-5" width="150px" [src]="'assets/Logo.png'" alt="Logo">
 
       <h1 class="text-uppercase fw-bold text-center mb-4">Faire une Annonce</h1>
     </div>
@@ -18,7 +18,7 @@
     </div>
     <div class="form-group">
   <textarea id="body" name="body" placeholder="Contenu" [(ngModel)]="messageGameForm.body" required
-            class="form-control" #body="ngModel"></textarea>
+            class="form-control textarea-wrap" #body="ngModel"></textarea>
     </div>
 
     <div class="alert alert-danger p-2 animate__animated animate__fadeIn"

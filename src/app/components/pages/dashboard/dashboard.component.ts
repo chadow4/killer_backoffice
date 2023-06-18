@@ -33,32 +33,6 @@ export class DashboardComponent implements OnInit {
   getStatusText(status: number): string {
     return this.gameService.getStatusText(status);
   }
-  startGame(idGame: string) {
-    this.gameService.startGame(idGame).subscribe({
-      next: (res) => {
-        this.alertService.success(res.message);
-        this.getUserInformations();
-      },
-      error: err => this.alertService.error(err.error.message)
-    })
-  }
 
-  deleteGame(idGame: string) {
-    this.gameService.deleteGame(idGame).subscribe({
-      next: (res) => {
-        this.alertService.success(res.message);
-        this.getUserInformations();
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: 'smooth'
-        });
-      },
-      error: err => this.alertService.error(err.error.message)
-    });
-  }
 
-  setSubPage(choice: string) {
-    this.subPage = choice;
-  }
 }

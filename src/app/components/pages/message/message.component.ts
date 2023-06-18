@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {GameService} from "../../../services/game.service";
 import {AlertService} from "../../../services/alert.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Message} from "../../../models/game.model";
+import {createMessage} from "../../../models/game.model";
 
 @Component({
   selector: 'app-message',
@@ -27,11 +27,12 @@ export class MessageComponent implements OnInit {
   }
 
   onSubmit() {
-    const gameMessage = this.messageGameForm as Message;
+    const gameMessage = this.messageGameForm as createMessage;
+    gameMessage.body = gameMessage.body.replace(/\n/g, " ");
     this.gameService.sendMessage(this.gameId, gameMessage).subscribe({
       next: (res) => {
         this.alertService.success(res.message);
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['/game', this.gameId]);
       },
       error: err => this.alertService.error(err.error.message)
     });

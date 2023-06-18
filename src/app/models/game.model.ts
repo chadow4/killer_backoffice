@@ -12,7 +12,15 @@ export interface GameDetailed {
   };
 }
 
-export interface Message {
+export interface createMessage {
   title: string;
   body: string;
+};
+
+export interface Message{
+    body: string;
+    date: string;
+    id: number;
+    title: string;
+    type: number;
 }
