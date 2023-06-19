@@ -7,8 +7,12 @@
 
 .game{
   font-style: normal;
-  font-weight: 800;
+  font-weight: 700;
   color: #CED3E0;
+}
+
+p,a,th,tr{
+  font-family: 'Roboto', sans-serif;
 }
 .game-infos{
   background: #1B1C21;
@@ -45,3 +49,17 @@ button:hover{
   color: #000;
 }
 
+
+th{
+  color: #CED3E0;
+
+}
+
+.table-responsive{
+  border-radius: 20px !important;
+}
+
+.scrollable-list{
+  height: 500px;
+  overflow-y: scroll;
+}

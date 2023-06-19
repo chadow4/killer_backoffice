@@ -1,9 +1,8 @@
-import {Component, HostListener, OnInit} from '@angular/core';
-import {GameDetailed, GamePlayer, Message} from "../../../models/game.model";
-import {GameService} from "../../../services/game.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {AlertService} from "../../../services/alert.service";
-
+import { Component, ElementRef, HostListener, OnInit, ViewChild, Renderer2 } from '@angular/core';
+import { GameDetailed, GamePlayer, Message } from "../../../models/game.model";
+import { GameService } from "../../../services/game.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { AlertService } from "../../../services/alert.service";
 
 @Component({
   selector: 'app-game-details',
@@ -12,24 +11,24 @@ import {AlertService} from "../../../services/alert.service";
 })
 export class GameDetailsComponent implements OnInit {
 
+
   gameDetail!: GameDetailed;
   listMessage!: Message[];
   listPlayers!: GamePlayer[];
 
   isFullyLoaded: boolean = false;
-
   offset: number = 0;
-
   limit: number = 20;
   gameId!: string;
   showScrollToTop = false;
 
-  constructor(private gameService: GameService,
-              private route: ActivatedRoute,
-              private alertService: AlertService,
-              private router: Router) {
-
-  }
+  constructor(
+    private gameService: GameService,
+    private route: ActivatedRoute,
+    private alertService: AlertService,
+    private router: Router,
+    private elementRef: ElementRef
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -57,6 +56,7 @@ export class GameDetailsComponent implements OnInit {
       console.log(this.listPlayers);
     });
   }
+
   private loadMessages() {
     this.gameService.getMessages(this.gameId, this.offset, this.limit).subscribe((res) => {
       if (res.data.messages.length < this.limit) {
@@ -75,17 +75,7 @@ export class GameDetailsComponent implements OnInit {
     this.loadMessages();
   }
 
-  @HostListener("window:scroll", [])
-  onScroll(): void {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      this.loadMore();
-      if(!this.isFullyLoaded){
-        this.alertService.success("Chargement ...");
-      }else{
-        this.alertService.error("Plus de messages à charger");
-      }
-    }
-  }
+
 
   deleteGame(idGame: string) {
     this.gameService.deleteGame(idGame).subscribe({
@@ -108,7 +98,21 @@ export class GameDetailsComponent implements OnInit {
         this.ngOnInit();
       },
       error: err => this.alertService.error(err.error.message)
-    })
+    });
+  }
+
+
+  onScroll(event: any): void {
+    const element = event.target;
+    const atBottom = element.scrollHeight - element.scrollTop === element.clientHeight;
+    if (atBottom) {
+      this.loadMore();
+      if(!this.isFullyLoaded){
+        this.alertService.success("Chargement ...");
+      }else{
+        this.alertService.error("Plus de messages à charger");
+      }
+    }
   }
 
 }
