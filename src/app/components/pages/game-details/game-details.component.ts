@@ -108,7 +108,7 @@ export class GameDetailsComponent implements OnInit {
     if (atBottom) {
       this.loadMore();
       if (!this.isFullyLoaded) {
-        this.alertService.success("Chargement ...");
+        this.alertService.success("Chargement de plus de messages ...");
       } else {
         this.alertService.error("Plus de messages à charger");
       }
