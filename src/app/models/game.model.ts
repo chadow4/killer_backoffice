@@ -12,7 +12,16 @@ export interface GameDetailed {
   };
 }
 
-export interface createMessage {
+export interface GamePlayer{
+  id: number;
+  first_name: string;
+  last_name: string;
+  is_alive: boolean;
+  private_key : string;
+}
+
+
+export interface MessageCreate {
   title: string;
   body: string;
 };

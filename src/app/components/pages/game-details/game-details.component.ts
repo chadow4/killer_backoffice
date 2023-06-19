@@ -1,5 +1,5 @@
 import {Component, HostListener, OnInit} from '@angular/core';
-import {GameDetailed, Message} from "../../../models/game.model";
+import {GameDetailed, GamePlayer, Message} from "../../../models/game.model";
 import {GameService} from "../../../services/game.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AlertService} from "../../../services/alert.service";
@@ -14,6 +14,7 @@ export class GameDetailsComponent implements OnInit {
 
   gameDetail!: GameDetailed;
   listMessage!: Message[];
+  listPlayers!: GamePlayer[];
 
   isFullyLoaded: boolean = false;
 
@@ -35,17 +36,27 @@ export class GameDetailsComponent implements OnInit {
       this.gameId = params.get('gameId')!;
     });
 
-    this.gameService.getGameInformation(this.gameId).subscribe((res) => {
-      this.gameDetail = res.data as GameDetailed
-      console.log(this.gameDetail);
-    });
+    this.loadGameInformations();
     this.loadMessages();
+    this.loadGamePlayers();
   }
 
   public getStatusText(status: number): string {
     return this.gameService.getStatusText(status);
   }
 
+  private loadGameInformations() {
+    this.gameService.getGameInformation(this.gameId).subscribe((res) => {
+      this.gameDetail = res.data as GameDetailed
+    });
+  }
+
+  private loadGamePlayers() {
+    this.gameService.getGamePlayers(this.gameId).subscribe((res) => {
+      this.listPlayers = res.data.players as GamePlayer[];
+      console.log(this.listPlayers);
+    });
+  }
   private loadMessages() {
     this.gameService.getMessages(this.gameId, this.offset, this.limit).subscribe((res) => {
       if (res.data.messages.length < this.limit) {
@@ -100,7 +111,4 @@ export class GameDetailsComponent implements OnInit {
     })
   }
 
-  scrollToTop() {
-
-  }
 }

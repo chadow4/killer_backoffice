@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {GameService} from "../../../services/game.service";
 import {AlertService} from "../../../services/alert.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {createMessage} from "../../../models/game.model";
+import {MessageCreate} from "../../../models/game.model";
 
 @Component({
   selector: 'app-message',
@@ -27,7 +27,7 @@ export class MessageComponent implements OnInit {
   }
 
   onSubmit() {
-    const gameMessage = this.messageGameForm as createMessage;
+    const gameMessage = this.messageGameForm as MessageCreate;
     gameMessage.body = gameMessage.body.replace(/\n/g, " ");
     this.gameService.sendMessage(this.gameId, gameMessage).subscribe({
       next: (res) => {
