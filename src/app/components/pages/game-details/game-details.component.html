@@ -57,7 +57,7 @@
     <div class="d-flex mt-5 flex-column align-items-center scrollable-list" id="scrollableList" (scroll)="onScroll($event)">
       <div class="my-4 list-game p-3 col-12"
            *ngFor="let message of listMessage">
-        <div class="d-flex align-items-center justify-content-between"><p class="m-0">{{message.id}}</p>
+        <div class="d-flex align-items-center justify-content-between"><p class="m-0">{{message.title}}</p>
           <span>{{message.date | date}}</span></div>
         <hr>
         <p>{{message.body}}</p>

@@ -1,1 +1,42 @@
-<p>register works!</p>
+<div class="register-form p-0 py-5 p-lg-5 row animate__animated animate__fadeIn">
+  <form #registerF="ngForm" (ngSubmit)="registerF.form.valid && onSubmit()">
+    <div class="form-title d-flex flex-column justify-content-center align-items-center">
+      <img class="img-fluid m-5" width="150px" [src]="'assets/Logo.png'" alt="Logo">
+      <h1 class="text-uppercase fw-bold text-center mb-4">S'INSCRIRE</h1>
+    </div>
+    <div class="form-group">
+      <input type="username" id="username" name="username" placeholder="username"
+             [(ngModel)]="registerForm.username" required
+             class="form-control"
+             #username="ngModel">
+    </div>
+    <div class="alert alert-danger p-2 animate__animated animate__fadeIn"
+         role="alert"
+         *ngIf="username.errors && registerF.submitted">
+      le champ ne doit pas être vide
+    </div>
+    <div class="form-group">
+      <input type="email" id="email" name="email" placeholder="Email"
+             [(ngModel)]="registerForm.email" required
+             class="form-control"
+             #email="ngModel">
+    </div>
+    <div class="alert alert-danger p-2 animate__animated animate__fadeIn"
+         role="alert"
+         *ngIf="email.errors && registerF.submitted">
+      le champ ne doit pas être vide
+    </div>
+    <div class="form-group">
+      <input type="password" id="password" name="password"  placeholder="Mot de passe" [(ngModel)]="registerForm.password" required
+             class="form-control mt-1" #password="ngModel">
+    </div>
+    <div class="alert alert-danger p-2 animate__animated animate__fadeIn"
+         role="alert"
+         *ngIf="password.errors && registerF.submitted">
+      le champ ne doit pas être vide
+    </div>
+    <div class="form-group text-center">
+      <button class="btn" type="submit">S'Inscrire</button>
+    </div>
+  </form>
+</div>

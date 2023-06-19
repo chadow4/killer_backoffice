@@ -1,8 +1,8 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild, Renderer2 } from '@angular/core';
-import { GameDetailed, GamePlayer, Message } from "../../../models/game.model";
-import { GameService } from "../../../services/game.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { AlertService } from "../../../services/alert.service";
+import {Component, ElementRef, OnInit} from '@angular/core';
+import {GameDetailed, GamePlayer, Message} from "../../../models/game.model";
+import {GameService} from "../../../services/game.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {AlertService} from "../../../services/alert.service";
 
 @Component({
   selector: 'app-game-details',
@@ -28,7 +28,8 @@ export class GameDetailsComponent implements OnInit {
     private alertService: AlertService,
     private router: Router,
     private elementRef: ElementRef
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -76,7 +77,6 @@ export class GameDetailsComponent implements OnInit {
   }
 
 
-
   deleteGame(idGame: string) {
     this.gameService.deleteGame(idGame).subscribe({
       next: (res) => {
@@ -107,9 +107,9 @@ export class GameDetailsComponent implements OnInit {
     const atBottom = element.scrollHeight - element.scrollTop === element.clientHeight;
     if (atBottom) {
       this.loadMore();
-      if(!this.isFullyLoaded){
+      if (!this.isFullyLoaded) {
         this.alertService.success("Chargement ...");
-      }else{
+      } else {
         this.alertService.error("Plus de messages à charger");
       }
     }
