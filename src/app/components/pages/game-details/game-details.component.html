@@ -55,7 +55,7 @@
     <button class="btn col-auto m-auto" [routerLink]="['/message',gameDetail.id]"><i
       class="fas fa-stop-circle me-1"></i>💬 <span class="ms-2">Faire une annonce</span>
     </button>
-    <div class="d-flex mt-5 flex-column align-items-center scrollable-list" id="scrollableList" (scroll)="onScroll($event)">
+    <div class="d-flex mt-5 px-5 col-auto flex-column align-items-center scrollable-list" id="scrollableList" (scroll)="onScroll($event)">
       <div class="my-4 list-game p-3 col-12"
            *ngFor="let message of listMessage">
         <div class="d-flex align-items-center justify-content-between"><p class="m-0">{{message.title}}</p>
