@@ -1,4 +1,4 @@
-<div class="col-12 col-md-8 m-auto dashboard p-0 p-lg-5 align-items-center justify-content-center my-5">
+<div class="col-12 col-md-8 m-auto dashboard align-items-center justify-content-center my-5 p-md-5 my-md-5">
   <div class="text-center menu m-auto p-4">
     <img class="img-fluid" width="150px" [src]="'assets/Logo.png'" alt="Logo">
     <h1 class="text-uppercase fw-bold mt-2">Dashboard</h1>
@@ -17,7 +17,7 @@
       <p>identifiant : {{game.id}}</p>
       <p>Status : {{getStatusText(game.status)}}</p>
       <div class="row p-1 align-items-center justify-content-center gap-4">
-        <button class="btn col-12 col-md-auto" [routerLink]="['/game',game.id]"><i class="fas fa-trash me-1"></i>🗡️ Details de la partie</button>
+        <button class="btn col-auto" [routerLink]="['/game',game.id]"><i class="fas fa-trash me-1"></i>🗡️ Details de la partie</button>
       </div>
     </div>
   </div>
