@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateUsersComponent } from './create-users.component';
+import { ImportCsvComponent } from './import-csv.component';
 
-describe('CreateUsersComponent', () => {
-  let component: CreateUsersComponent;
-  let fixture: ComponentFixture<CreateUsersComponent>;
+describe('ImportCsvComponent', () => {
+  let component: ImportCsvComponent;
+  let fixture: ComponentFixture<ImportCsvComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreateUsersComponent ]
+      declarations: [ ImportCsvComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CreateUsersComponent);
+    fixture = TestBed.createComponent(ImportCsvComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

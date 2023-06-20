@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {API_URL} from "./config";
-import {GameCreate, KillAdmin, KillPlayer, MessageCreate} from "../models/game.model";
+import {GameCreate, ImportPlayer, KillAdmin, KillPlayer, MessageCreate} from "../models/game.model";
 import {ResponseAPI} from "../models/responseAPI.model";
 import {Observable} from "rxjs";
 
@@ -55,9 +55,14 @@ export class GameService {
     return this.http.post<ResponseAPI>(this.gameUrl + "/" + gameId + "/adminKill", killAdminId);
   }
 
-  killPlayer(gameId: string, killPlayer: KillPlayer) {
+  public killPlayer(gameId: string, killPlayer: KillPlayer) {
     return this.http.post<ResponseAPI>(this.gameUrl + "/" + gameId + "/kill", killPlayer);
   }
+
+  public importPlayers(gameId: string, players: ImportPlayer[]) {
+    return this.http.post<ResponseAPI>(this.gameUrl + "/" + gameId + "/importPlayers", players);
+  }
+
 
   public getStatusText(status: number): string {
     switch (status) {

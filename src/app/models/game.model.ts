@@ -28,6 +28,10 @@ export interface KillPlayer{
   kill_key: string;
 }
 
+export interface  ImportPlayer{
+  first_name: string;
+  last_name: string;
+}
 export interface MessageCreate {
   title: string;
   body: string;
