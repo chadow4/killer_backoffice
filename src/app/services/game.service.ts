@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {API_URL} from "./config";
-import {MessageCreate, GameCreate} from "../models/game.model";
+import {GameCreate, KillAdmin, MessageCreate} from "../models/game.model";
 import {ResponseAPI} from "../models/responseAPI.model";
 import {Observable} from "rxjs";
 
@@ -44,11 +44,15 @@ export class GameService {
     const params = new HttpParams()
       .set('offset', offset.toString())
       .set('limit', limit.toString());
-    return this.http.get<ResponseAPI>(this.gameUrl + "/" + gameId + "/feed",{params: params});
+    return this.http.get<ResponseAPI>(this.gameUrl + "/" + gameId + "/feed", {params: params});
   }
 
   public getGamePlayers(gameId: string): Observable<ResponseAPI> {
     return this.http.get<ResponseAPI>(this.gameUrl + "/" + gameId + "/players");
+  }
+
+  public killAdmin(gameId: string, killAdminId: KillAdmin) {
+    return this.http.post<ResponseAPI>(this.gameUrl + "/" + gameId + "/adminKill", killAdminId);
   }
 
   public getStatusText(status: number): string {

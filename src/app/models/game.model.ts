@@ -20,6 +20,9 @@ export interface GamePlayer{
   private_key : string;
 }
 
+export interface KillAdmin{
+  participant_id: number;
+}
 
 export interface MessageCreate {
   title: string;

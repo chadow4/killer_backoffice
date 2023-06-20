@@ -1,5 +1,5 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
-import {GameDetailed, GamePlayer, Message} from "../../../models/game.model";
+import {Component, OnInit} from '@angular/core';
+import {GameDetailed, GamePlayer, KillAdmin, Message} from "../../../models/game.model";
 import {GameService} from "../../../services/game.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AlertService} from "../../../services/alert.service";
@@ -13,25 +13,24 @@ export class GameDetailsComponent implements OnInit {
 
 
   gameDetail!: GameDetailed;
-  listMessage!: Message[];
-  listPlayers!: GamePlayer[];
+  listMessage: Message[] = [];
+  listPlayers: GamePlayer[] = [];
 
   isFullyLoaded: boolean = false;
   offset: number = 0;
   limit: number = 20;
   gameId!: string;
-  showScrollToTop = false;
 
   constructor(
     private gameService: GameService,
     private route: ActivatedRoute,
     private alertService: AlertService,
     private router: Router,
-    private elementRef: ElementRef
   ) {
   }
 
   ngOnInit(): void {
+    this.offset = 0;
     this.route.paramMap.subscribe(params => {
       this.gameId = params.get('gameId')!;
     });
@@ -54,7 +53,6 @@ export class GameDetailsComponent implements OnInit {
   private loadGamePlayers() {
     this.gameService.getGamePlayers(this.gameId).subscribe((res) => {
       this.listPlayers = res.data.players as GamePlayer[];
-      console.log(this.listPlayers);
     });
   }
 
@@ -63,7 +61,7 @@ export class GameDetailsComponent implements OnInit {
       if (res.data.messages.length < this.limit) {
         this.isFullyLoaded = true;
       }
-      if (!this.listMessage) {
+      if (this.offset === 0) {
         this.listMessage = res.data.messages as Message[];
       } else {
         this.listMessage.push(...res.data.messages as Message[]);
@@ -90,17 +88,25 @@ export class GameDetailsComponent implements OnInit {
     this.gameService.startGame(idGame).subscribe({
       next: (res) => {
         this.alertService.success(res.message);
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: 'smooth'
-        });
         this.ngOnInit();
       },
       error: err => this.alertService.error(err.error.message)
     });
   }
 
+  public killAdmin(gameId: string, userId: number) {
+    const killAdmin: KillAdmin = {
+      participant_id: userId,
+    };
+    this.gameService.killAdmin(gameId, killAdmin).subscribe({
+      next: (res) => {
+        this.alertService.success(res.message);
+        this.ngOnInit();
+
+      },
+      error: err => this.alertService.error(err.error.message)
+    });
+  }
 
   onScroll(event: any): void {
     const element = event.target;

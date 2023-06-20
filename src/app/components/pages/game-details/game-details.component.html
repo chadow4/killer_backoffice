@@ -12,7 +12,7 @@
         <p>Nombre de personnes totales: <span>{{gameDetail.players.total}}</span></p>
         <p>Statut :  {{getStatusText(gameDetail.status)}}</p>
       </div>
-      <div class="d-flex align-items-center justify-content-center gap-3 mt-4">
+      <div class="row align-items-center justify-content-center gap-3 mt-4">
         <button *ngIf="gameDetail.status == 0" class="btn col-auto" (click)="startGame(gameDetail.id)"><i
           class="fas fa-arrow-alt-circle-up me-1"></i>🏁 Lancer la partie
         </button>
@@ -20,7 +20,7 @@
         <button class="btn col-auto" (click)="deleteGame(gameDetail.id)"><i class="fas fa-trash me-1"></i>🗑️
           <span class="ms-2">Supprimer la partie</span>
         </button>
-        <button class="btn" [routerLink]="['/edit-game',gameDetail.name,gameDetail.id]" aria-current="page" href="#">
+        <button class="btn col-auto" [routerLink]="['/edit-game',gameDetail.name,gameDetail.id]" aria-current="page" href="#">
           ️️️✏️
           <span class="ms-2">Modifier</span>
         </button>
@@ -36,6 +36,7 @@
           <th scope="col">Prénom</th>
           <th scope="col">Nom</th>
           <th scope="col">Vivant</th>
+          <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
@@ -43,6 +44,7 @@
           <td>{{ player.first_name }}</td>
           <td>{{ player.last_name }}</td>
           <td>{{ player.is_alive }}</td>
+          <td><button (click)="killAdmin(gameDetail.id,player.id)" class="btn">Tuer</button></td>
         </tr>
         </tbody>
       </table>
