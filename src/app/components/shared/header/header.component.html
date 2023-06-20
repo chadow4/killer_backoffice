@@ -3,7 +3,7 @@
     <img class="img-fluid" width="100px" [src]="'assets/Logo.png'" alt="Logo">
     <h1 class="logo cursor-pointer">Killer INSA</h1>
   </div>
-  <ul class="nav-links gap-5">
+  <ul class="nav-links p-2 p-md-0 mt-3 mt-md-0 gap-5">
     <li *ngIf="!loggedIn" [routerLink]="['login']">Connexion</li>
     <li *ngIf="!loggedIn" [routerLink]="['register']">Inscription</li>
     <li *ngIf="loggedIn" [routerLink]="['dashboard']">Dashboard</li>
