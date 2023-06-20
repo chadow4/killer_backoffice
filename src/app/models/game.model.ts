@@ -24,6 +24,10 @@ export interface KillAdmin{
   participant_id: number;
 }
 
+export interface KillPlayer{
+  kill_key: string;
+}
+
 export interface MessageCreate {
   title: string;
   body: string;

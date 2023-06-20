@@ -27,34 +27,40 @@
 
       </div>
     </div>
-
-    <h2 class="mt-5 mb-3 text-center">Liste des joueurs : </h2>
-    <div class="table-responsive">
-      <table class="table table-dark table-striped">
-        <thead>
-        <tr>
-          <th scope="col">Prénom</th>
-          <th scope="col">Nom</th>
-          <th scope="col">Vivant</th>
-          <th scope="col">Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let player of listPlayers">
-          <td>{{ player.first_name }}</td>
-          <td>{{ player.last_name }}</td>
-          <td>{{ player.is_alive }}</td>
-          <td><button (click)="killAdmin(gameDetail.id,player.id)" class="btn">Tuer</button></td>
-        </tr>
-        </tbody>
-      </table>
+    <div class="row flex-column align-items-center">
+      <h2 class="mt-5 mb-3 text-center">Liste des joueurs : </h2>
+      <button class="btn col-auto" [routerLink]="['/message',gameDetail.id]"><i
+        class="fas fa-stop-circle me-1"></i>📚 <span class="ms-2">Importer un CSV</span>
+      </button>
+      <div class="table-responsive mt-5">
+        <table class="table table-dark table-striped">
+          <thead>
+          <tr>
+            <th scope="col">Prénom</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Vivant</th>
+            <th scope="col" >KillAdmin</th>
+            <th scope="col">Kill</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let player of listPlayers">
+            <td>{{ player.first_name }}</td>
+            <td>{{ player.last_name }}</td>
+            <td>{{ player.is_alive }}</td>
+            <td><button  *ngIf="player.is_alive" (click)="killAdmin(player.id)" class="btn">KillAdmin</button></td>
+            <td><button  *ngIf="player.is_alive" (click)="killPlayer(player.private_key)" class="btn">Kill</button></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
   </div>
 
   <div class="col-12 col-lg-5 row flex-column align-items-center">
     <h2 class="mt-5 mb-3 text-center">Liste des messages : </h2>
-    <button class="btn col-auto m-auto" [routerLink]="['/message',gameDetail.id]"><i
+    <button class="btn col-auto" [routerLink]="['/message',gameDetail.id]"><i
       class="fas fa-stop-circle me-1"></i>💬 <span class="ms-2">Faire une annonce</span>
     </button>
     <div class="d-flex mt-5 px-5 col-auto flex-column align-items-center scrollable-list" id="scrollableList" (scroll)="onScroll($event)">

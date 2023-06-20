@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {GameDetailed, GamePlayer, KillAdmin, Message} from "../../../models/game.model";
+import {GameDetailed, GamePlayer, KillAdmin, KillPlayer, Message} from "../../../models/game.model";
 import {GameService} from "../../../services/game.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AlertService} from "../../../services/alert.service";
@@ -94,11 +94,11 @@ export class GameDetailsComponent implements OnInit {
     });
   }
 
-  public killAdmin(gameId: string, userId: number) {
+  public killAdmin(userId: number) {
     const killAdmin: KillAdmin = {
       participant_id: userId,
     };
-    this.gameService.killAdmin(gameId, killAdmin).subscribe({
+    this.gameService.killAdmin(this.gameId, killAdmin).subscribe({
       next: (res) => {
         this.alertService.success(res.message);
         this.ngOnInit();
@@ -108,6 +108,18 @@ export class GameDetailsComponent implements OnInit {
     });
   }
 
+  public killPlayer(private_key: string) {
+    const killPlayer: KillPlayer = {
+      kill_key: private_key,
+    }
+    this.gameService.killPlayer(this.gameId, killPlayer).subscribe({
+      next: (res) => {
+        this.alertService.success(res.message);
+        this.ngOnInit();
+      },
+      error: err => this.alertService.error(err.error.message)
+    });
+  }
   onScroll(event: any): void {
     const element = event.target;
     const atBottom = element.scrollHeight - element.scrollTop === element.clientHeight;
@@ -120,5 +132,6 @@ export class GameDetailsComponent implements OnInit {
       }
     }
   }
+
 
 }
