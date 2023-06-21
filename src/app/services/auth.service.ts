@@ -57,18 +57,17 @@ export class AuthService {
     const userJwtToken = window.localStorage.getItem(this.USER_TOKEN_KEY);
     return userJwtToken ? JSON.parse(userJwtToken) : null;
   }
+
   public getCurrentRefreshToken(): RefreshToken | null {
     const userRefreshToken = window.localStorage.getItem(this.USER_REFRESH_TOKEN_KEY);
     return userRefreshToken ? JSON.parse(userRefreshToken) : null;
   }
 
-  public setCurrentTokens(token: JwtToken | null, refreshToken: RefreshToken | null){
-    const userJwtTokenString = JSON.stringify(token);
-    const userRefreshTokenString = JSON.stringify(refreshToken);
-    window.localStorage.setItem(this.USER_TOKEN_KEY, userJwtTokenString);
-    window.localStorage.setItem(this.USER_REFRESH_TOKEN_KEY, userRefreshTokenString);
+  public setCurrentTokens(token: JwtToken | null, refreshToken: RefreshToken | null) {
+    window.localStorage.setItem(this.USER_TOKEN_KEY, JSON.stringify(token));
+    window.localStorage.setItem(this.USER_REFRESH_TOKEN_KEY, JSON.stringify(refreshToken));
   }
-  
+
   public refreshToken(refreshToken: RefreshToken | null): Observable<ResponseAPI> {
     return this.http.post<ResponseAPI>(this.authUrl + "/refresh", refreshToken).pipe(
       tap((response: ResponseAPI) => {
@@ -80,7 +79,7 @@ export class AuthService {
       ));
   }
 
-  public getJwtContentToken(): JwtTokenContent{
+  public getJwtContentToken(): JwtTokenContent {
     const userJwtToken = this.getCurrentToken()!.token;
     return userJwtToken ? JSON.parse(atob(userJwtToken.split('.')[1])) : null;
   }
