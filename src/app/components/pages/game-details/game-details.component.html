@@ -27,10 +27,36 @@
 
       </div>
     </div>
+    <div  *ngIf="selectedPlayer"  class="modal fade dark-mode " id="contractModal" tabindex="-1" aria-labelledby="contractModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header d-flex align-items-center justify-content-center">
+            <h5 class="modal-title text-center" id="contractModalLabel">Finir le contrat du Joueur {{ selectedPlayer.first_name}}</h5>
+          </div>
+          <div class="modal-body d-flex flex-column align-items-center justify-content-center">
+            <form (ngSubmit)=" onSubmitFinishContract()">
+              <div class="mb-3">
+                <label for="weaponsSelect" class="form-label">Arme :</label>
+                <select class="form-select" id="weaponsSelect" name="weaponsSelect" [(ngModel)]="FinishContractForm.weapon_id">
+                  <option ngValue="-1" disabled  selected>Choisir une arme</option>
+                  <option *ngFor="let weapon of selectedPlayer.contract.weapons" [ngValue]="weapon.id">{{ weapon.name }}</option>
+                </select>
+              </div>
+              <button data-bs-dismiss="modal" type="submit" class="btn text-center">Confirmer</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn" data-bs-dismiss="modal">Fermer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <div class="row flex-column align-items-center">
-      <h2 class="mt-5 mb-3 text-center">Liste des joueurs : </h2>
-      <button class="btn col-auto" [routerLink]="['/import-csv',gameDetail.id]"><i
-        class="fas fa-stop-circle me-1"></i>📚 <span class="ms-2">Importer un CSV</span>
+      <h2 class="mt-5 mb-3 text-center">Liste des joueurs :</h2>
+      <button class="btn col-auto" [routerLink]="['/import-csv',gameDetail.id]">
+        <i class="fas fa-stop-circle me-1"></i>📚 <span class="ms-2">Importer un CSV</span>
       </button>
       <div class="table-responsive mt-5">
         <table class="table table-dark table-striped">
@@ -39,8 +65,8 @@
             <th scope="col">Prénom</th>
             <th scope="col">Nom</th>
             <th scope="col">Vivant</th>
-            <th scope="col" >KillAdmin</th>
-            <th scope="col">Kill</th>
+            <th scope="col">Action</th>
+            <th scope="col">Finir Contrat</th>
           </tr>
           </thead>
           <tbody>
@@ -48,13 +74,17 @@
             <td>{{ player.first_name }}</td>
             <td>{{ player.last_name }}</td>
             <td>{{ player.is_alive }}</td>
-            <td><button  *ngIf="player.is_alive" (click)="killAdmin(player.id)" class="btn">KillAdmin</button></td>
-            <td><button  *ngIf="player.is_alive" (click)="killPlayer(player.private_key)" class="btn">Kill</button></td>
+            <td><button *ngIf="player.is_alive" (click)="killAdmin(player.id)" class="btn">KillAdmin</button></td>
+            <td>
+              <button *ngIf="player.is_alive && player.contract != null" class="btn" data-bs-toggle="modal" data-bs-target="#contractModal"
+                      (click)="selectedPlayer = player">Finir contrat</button>
+            </td>
           </tr>
           </tbody>
         </table>
       </div>
     </div>
+
 
   </div>
 

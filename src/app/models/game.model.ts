@@ -1,3 +1,5 @@
+import {Contract} from "./contract";
+
 export interface GameCreate {
   name: string;
 }
@@ -18,6 +20,8 @@ export interface GamePlayer{
   last_name: string;
   is_alive: boolean;
   private_key : string;
+
+  contract: Contract;
 }
 
 export interface KillAdmin{

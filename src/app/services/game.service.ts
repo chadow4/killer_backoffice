@@ -4,6 +4,7 @@ import {API_URL} from "./config";
 import {GameCreate, ImportPlayer, KillAdmin, KillPlayer, MessageCreate} from "../models/game.model";
 import {ResponseAPI} from "../models/responseAPI.model";
 import {Observable} from "rxjs";
+import {FinishContract} from "../models/contract";
 
 @Injectable({
   providedIn: 'root'
@@ -75,5 +76,9 @@ export class GameService {
       default:
         return 'unknown';
     }
+  }
+
+  completeContract(gameId: string, finishContract: FinishContract) {
+    return this.http.post<ResponseAPI>(this.gameUrl + "/" + gameId + "/completeContract", finishContract);
   }
 }

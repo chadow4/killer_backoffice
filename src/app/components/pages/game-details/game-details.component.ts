@@ -3,6 +3,7 @@ import {GameDetailed, GamePlayer, KillAdmin, KillPlayer, Message} from "../../..
 import {GameService} from "../../../services/game.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AlertService} from "../../../services/alert.service";
+import {FinishContract} from "../../../models/contract";
 
 @Component({
   selector: 'app-game-details',
@@ -15,6 +16,10 @@ export class GameDetailsComponent implements OnInit {
   gameDetail!: GameDetailed;
   listMessage: Message[] = [];
   listPlayers: GamePlayer[] = [];
+
+  selectedPlayer?: GamePlayer | null;
+
+  FinishContractForm = {player_id: -1, weapon_id: -1};
 
   isFullyLoaded: boolean = false;
   offset: number = 0;
@@ -31,6 +36,7 @@ export class GameDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.offset = 0;
+
     this.route.paramMap.subscribe(params => {
       this.gameId = params.get('gameId')!;
     });
@@ -120,6 +126,7 @@ export class GameDetailsComponent implements OnInit {
       error: err => this.alertService.error(err.error.message)
     });
   }
+
   onScroll(event: any): void {
     const element = event.target;
     const atBottom = element.scrollHeight - element.scrollTop === element.clientHeight;
@@ -131,6 +138,24 @@ export class GameDetailsComponent implements OnInit {
         this.alertService.error("Plus de messages à charger");
       }
     }
+  }
+
+  onSubmitFinishContract() {
+    this.FinishContractForm.player_id = this.selectedPlayer!.id;
+    const finishContract = this.FinishContractForm as FinishContract;
+    this.selectedPlayer = null;
+    if (this.FinishContractForm.weapon_id === -1 || this.FinishContractForm.player_id === -1) {
+      this.alertService.error("Vous n'avez pas sélectionné d'arme ou de joueur");
+      return;
+    }
+    this.gameService.completeContract(this.gameId, finishContract).subscribe({
+      next: (res) => {
+        this.alertService.success(res.message);
+        this.FinishContractForm = {player_id: -1, weapon_id: -1};
+        this.ngOnInit();
+      },
+      error: err => this.alertService.error(err.error.message)
+    });
   }
 
 
