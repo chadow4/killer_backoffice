@@ -4,7 +4,7 @@ import {BehaviorSubject, Observable, tap} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {AlertService} from "./alert.service";
 import {Router} from "@angular/router";
-import {JwtToken, Login, Register} from "../models/auth.model";
+import {JwtToken, Login, RefreshToken, Register} from "../models/auth.model";
 import {ResponseAPI} from "../models/responseAPI.model";
 
 @Injectable({
@@ -15,24 +15,28 @@ export class AuthService {
 
   authStateChanged = this.isLoggedInSubject.asObservable();
   USER_TOKEN_KEY = 'user_token_key';
+  USER_REFRESH_TOKEN_KEY = 'user_refresh_token_key';
 
-  userUrl: string = `${API_URL}/auth`;
+  authUrl: string = `${API_URL}/auth`;
 
   constructor(private http: HttpClient, private alertService: AlertService, private router: Router) {
   }
 
   public register(register: Register): Observable<ResponseAPI> {
-    return this.http.post<ResponseAPI>(this.userUrl + "/register", register);
+    return this.http.post<ResponseAPI>(this.authUrl + "/register", register);
   }
 
   public login(login: Login): Observable<ResponseAPI> {
-    return this.http.post<ResponseAPI>(this.userUrl + "/login", login).pipe(
+    console.log(login);
+    return this.http.post<ResponseAPI>(this.authUrl + "/login", login).pipe(
       tap((response: ResponseAPI) => {
         const jwtToken: JwtToken = {
           token: response.data.token,
+        }
+        const refreshToken: RefreshToken = {
           refresh_token: response.data.refresh_token
         }
-        this.setCurrentToken(jwtToken);
+        this.setCurrentTokens(jwtToken, refreshToken);
         this.isLoggedInSubject.next(true);
       })
     );
@@ -40,6 +44,7 @@ export class AuthService {
 
   public logout() {
     localStorage.removeItem(this.USER_TOKEN_KEY);
+    localStorage.removeItem(this.USER_REFRESH_TOKEN_KEY);
     this.isLoggedInSubject.next(false);
     this.router.navigate(['/']);
   }
@@ -52,9 +57,19 @@ export class AuthService {
     const userJwtToken = window.localStorage.getItem(this.USER_TOKEN_KEY);
     return userJwtToken ? JSON.parse(userJwtToken) : null;
   }
+  public getCurrentRefreshToken(): RefreshToken | null {
+    const userRefreshToken = window.localStorage.getItem(this.USER_REFRESH_TOKEN_KEY);
+    return userRefreshToken ? JSON.parse(userRefreshToken) : null;
+  }
 
-  public setCurrentToken(token: JwtToken) {
+  public setCurrentTokens(token: JwtToken | null, refreshToken: RefreshToken | null){
     const userJwtTokenString = JSON.stringify(token);
+    const userRefreshTokenString = JSON.stringify(refreshToken);
     window.localStorage.setItem(this.USER_TOKEN_KEY, userJwtTokenString);
+    window.localStorage.setItem(this.USER_REFRESH_TOKEN_KEY, userRefreshTokenString);
+  }
+
+  public refreshToken(refreshToken: RefreshToken | null): Observable<ResponseAPI> {
+    return this.http.post<ResponseAPI>(this.authUrl + "/refresh", refreshToken);
   }
 }

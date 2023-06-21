@@ -11,7 +11,9 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService, private router: Router, private alertService : AlertService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
-    const token = this.authService.getCurrentToken()?.token;
+    const token = this.authService.getCurrentToken()?.token || null;
+    const refreshToken = this.authService.getCurrentRefreshToken() || null;
+
 
     if (token) {
       request = request.clone({
@@ -24,9 +26,21 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 403) {
-          this.authService.logout();
-            this.router.navigateByUrl(`login`).then(() => this.alertService.error("Your are now disconnected, token expired"));
+          this.authService.refreshToken(refreshToken).subscribe(
+            (response) => {
+              const jwtToken = {
+                token: response.data.token,
+              };
+              this.authService.setCurrentTokens(jwtToken, refreshToken);
+              console.log("token refreshed");
+            },
+            (refreshError) => {
+              this.authService.logout();
+              this.router.navigateByUrl(`login`).then(() => this.alertService.error("You are now disconnected, token expired"));
+            }
+          );
         }
+
         return throwError(error);
       })
     );

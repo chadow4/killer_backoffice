@@ -13,5 +13,8 @@ export interface Login{
 
 export interface JwtToken{
   token : string;
+}
+
+export interface RefreshToken{
   refresh_token : string;
 }
