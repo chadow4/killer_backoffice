@@ -17,6 +17,8 @@ export class AuthInterceptor implements HttpInterceptor {
     const refreshToken = this.authService.getCurrentRefreshToken() || null;
     if (token) {
       const tokenExpiration = this.authService.getJwtContentToken().exp;
+      const date = new Date(tokenExpiration * 1000);
+      console.log(date.toLocaleTimeString());
       if (isTokenExpired(tokenExpiration) && !this.refreshingToken) {
         this.refreshingToken = true;
         this.authService.refreshToken(refreshToken).subscribe(
@@ -25,13 +27,13 @@ export class AuthInterceptor implements HttpInterceptor {
               token: response.data.token,
             };
             this.authService.setCurrentTokens(jwtToken, refreshToken);
-            console.log("Token refreshed");
+            this.alertService.success("Your session has been renewed");
             this.refreshingToken = false; // Réinitialiser la variable après le rafraîchissement du jeton
           },
           (refreshError) => {
             this.authService.logout();
             this.router.navigateByUrl(`login`).then(() =>
-              this.alertService.error("You are now disconnected, token expired")
+              this.alertService.error("You are now disconnected, invalid token")
             );
             this.refreshingToken = false; // Réinitialiser la variable en cas d'échec du rafraîchissement du jeton
           }

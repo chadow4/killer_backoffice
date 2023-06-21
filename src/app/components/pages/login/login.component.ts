@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
       next: (data) => {
         this.router.navigate(['dashboard']);
       },
-      error: err => this.alertService.error("erreur API")
+      error: err => this.alertService.error(err.error.message)
     });
   }
 }

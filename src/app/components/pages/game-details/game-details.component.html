@@ -65,7 +65,7 @@
             <th scope="col">Prénom</th>
             <th scope="col">Nom</th>
             <th scope="col">Vivant</th>
-            <th scope="col">Action</th>
+            <th scope="col">Kill Admin</th>
             <th scope="col">Finir Contrat</th>
           </tr>
           </thead>
@@ -74,10 +74,14 @@
             <td>{{ player.first_name }}</td>
             <td>{{ player.last_name }}</td>
             <td>{{ player.is_alive }}</td>
-            <td><button *ngIf="player.is_alive" (click)="killAdmin(player.id)" class="btn">KillAdmin</button></td>
+            <td>
+              <button *ngIf="player.is_alive" (click)="killAdmin(player.id)" class="btn">KillAdmin</button>
+              <span *ngIf="!player.is_alive">Indisponible</span>
+            </td>
             <td>
               <button *ngIf="player.is_alive && player.contract != null" class="btn" data-bs-toggle="modal" data-bs-target="#contractModal"
                       (click)="selectedPlayer = player">Finir contrat</button>
+              <span *ngIf="!player.is_alive || player.contract == null">Indisponible</span>
             </td>
           </tr>
           </tbody>
