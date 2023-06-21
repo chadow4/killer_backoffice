@@ -20,7 +20,7 @@ export class AuthInterceptor implements HttpInterceptor {
     if (token) {
       const tokenExpiration = this.authService.getJwtContentToken().exp;
       const date = new Date(tokenExpiration * 1000);
-      console.log(date.toLocaleTimeString());
+      console.log("Expiration token :",date.toLocaleTimeString());
 
       if (isTokenExpired(tokenExpiration) && !this.refreshingToken) {
         this.refreshingToken = true;

@@ -25,7 +25,6 @@ export class GameService {
   }
 
   public updateGame(gameId: string, game: GameCreate): Observable<ResponseAPI> {
-    console.log(gameId);
     return this.http.put<ResponseAPI>(this.gameUrl + "/" + gameId, game);
   }
 

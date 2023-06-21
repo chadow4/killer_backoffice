@@ -27,7 +27,6 @@ export class AuthService {
   }
 
   public login(login: Login): Observable<ResponseAPI> {
-    console.log(login);
     return this.http.post<ResponseAPI>(this.authUrl + "/login", login).pipe(
       tap((response: ResponseAPI) => {
         const jwtToken: JwtToken = {
