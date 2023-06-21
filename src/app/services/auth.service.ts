@@ -68,9 +68,16 @@ export class AuthService {
     window.localStorage.setItem(this.USER_TOKEN_KEY, userJwtTokenString);
     window.localStorage.setItem(this.USER_REFRESH_TOKEN_KEY, userRefreshTokenString);
   }
-
+  
   public refreshToken(refreshToken: RefreshToken | null): Observable<ResponseAPI> {
-    return this.http.post<ResponseAPI>(this.authUrl + "/refresh", refreshToken);
+    return this.http.post<ResponseAPI>(this.authUrl + "/refresh", refreshToken).pipe(
+      tap((response: ResponseAPI) => {
+          const jwtToken: JwtToken = {
+            token: response.data.token,
+          }
+          this.setCurrentTokens(jwtToken, refreshToken);
+        }
+      ));
   }
 
   public getJwtContentToken(): JwtTokenContent{
