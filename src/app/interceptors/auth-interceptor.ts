@@ -8,41 +8,54 @@ import {AlertService} from "../services/alert.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+  private refreshingToken: boolean = false;
+
   constructor(private authService: AuthService, private router: Router, private alertService : AlertService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
     const token = this.authService.getCurrentToken()?.token || null;
     const refreshToken = this.authService.getCurrentRefreshToken() || null;
-
-
     if (token) {
+      const tokenExpiration = this.authService.getJwtContentToken().exp;
+      if (isTokenExpired(tokenExpiration) && !this.refreshingToken) {
+        this.refreshingToken = true;
+        this.authService.refreshToken(refreshToken).subscribe(
+          (response) => {
+            const jwtToken = {
+              token: response.data.token,
+            };
+            this.authService.setCurrentTokens(jwtToken, refreshToken);
+            console.log("Token refreshed");
+            this.refreshingToken = false; // Réinitialiser la variable après le rafraîchissement du jeton
+          },
+          (refreshError) => {
+            this.authService.logout();
+            this.router.navigateByUrl(`login`).then(() =>
+              this.alertService.error("You are now disconnected, token expired")
+            );
+            this.refreshingToken = false; // Réinitialiser la variable en cas d'échec du rafraîchissement du jeton
+          }
+        );
+      }
+      const newToken = this.authService.getCurrentToken()?.token || null;
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${newToken}`,
         },
       });
     }
 
+    function isTokenExpired(expiration: number): boolean {
+      const currentTime = Math.floor(Date.now() / 1000);
+      return expiration < currentTime;
+    }
+
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 403) {
-          this.authService.refreshToken(refreshToken).subscribe(
-            (response) => {
-              const jwtToken = {
-                token: response.data.token,
-              };
-              this.authService.setCurrentTokens(jwtToken, refreshToken);
-              console.log("token refreshed");
-            },
-            (refreshError) => {
-              this.authService.logout();
-              this.router.navigateByUrl(`login`).then(() => this.alertService.error("You are now disconnected, token expired"));
-            }
-          );
-        }
-
         return throwError(error);
       })
     );
   }
+
+
 }

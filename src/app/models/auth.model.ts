@@ -18,3 +18,8 @@ export interface JwtToken{
 export interface RefreshToken{
   refresh_token : string;
 }
+
+export interface JwtTokenContent{
+  sub: number;
+  exp: number;
+}

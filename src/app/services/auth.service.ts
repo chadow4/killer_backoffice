@@ -4,7 +4,7 @@ import {BehaviorSubject, Observable, tap} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {AlertService} from "./alert.service";
 import {Router} from "@angular/router";
-import {JwtToken, Login, RefreshToken, Register} from "../models/auth.model";
+import {JwtToken, JwtTokenContent, Login, RefreshToken, Register} from "../models/auth.model";
 import {ResponseAPI} from "../models/responseAPI.model";
 
 @Injectable({
@@ -71,5 +71,10 @@ export class AuthService {
 
   public refreshToken(refreshToken: RefreshToken | null): Observable<ResponseAPI> {
     return this.http.post<ResponseAPI>(this.authUrl + "/refresh", refreshToken);
+  }
+
+  public getJwtContentToken(): JwtTokenContent{
+    const userJwtToken = this.getCurrentToken()!.token;
+    return userJwtToken ? JSON.parse(atob(userJwtToken.split('.')[1])) : null;
   }
 }
