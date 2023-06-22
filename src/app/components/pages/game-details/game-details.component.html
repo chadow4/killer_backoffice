@@ -14,7 +14,7 @@
       </div>
       <div class="row align-items-center justify-content-center gap-3 mt-4">
         <button *ngIf="gameDetail.status == 0" class="btn col-auto" (click)="startGame(gameDetail.id)"><i
-          class="fas fa-arrow-alt-circle-up me-1"></i>🏁 Lancer la partie
+          class="fas fa-arrow-alt-circle-up me-1"></i>🏁  <span class="ms-2">Lancer la partie</span>
         </button>
 
         <button class="btn col-auto" (click)="deleteGame(gameDetail.id)"><i class="fas fa-trash me-1"></i>🗑️
@@ -75,8 +75,8 @@
             <td>{{ player.last_name }}</td>
             <td>{{ player.is_alive }}</td>
             <td>
-              <button *ngIf="player.is_alive" (click)="killAdmin(player.id)" class="btn">KillAdmin</button>
-              <span *ngIf="!player.is_alive">Indisponible</span>
+              <button *ngIf="player.is_alive && player.contract != null" (click)="killAdmin(player.id)" class="btn">KillAdmin</button>
+              <span *ngIf="!player.is_alive || player.contract == null">Indisponible</span>
             </td>
             <td>
               <button *ngIf="player.is_alive && player.contract != null" class="btn" data-bs-toggle="modal" data-bs-target="#contractModal"
