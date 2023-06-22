@@ -82,3 +82,7 @@ body{
   transform: scale(0.5); /* L'image est invisible par défaut */
   animation: zoomIn 2s ease forwards; /* L'animation dure 2 secondes */
 }
+
+input{
+  font-family: 'Roboto', sans-serif;
+}
